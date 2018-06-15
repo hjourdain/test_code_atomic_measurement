@@ -3,8 +3,6 @@ SConscript('../iotivity/build_common/SConscript')
 Import('env')
 server_env = env.Clone()
 
-#server_env.AppendUnique(CXXFLAGS=['-std=c++11'])
-
 server_env.AppendUnique(CPPPATH=[
     '../iotivity/resource/csdk/logger/include',
     '../iotivity/resource/csdk/include',
@@ -31,14 +29,7 @@ server_env.PrependUnique(LIBS=['octbstack'])
 server_env.AppendUnique(LIBS=['mbedtls', 'mbedx509', 'mbedcrypto'])
 server_env.AppendUnique(CPPDEFINES=['TB_LOG'])
 
-#server_env.AppendUnique(LIBS=['wiringPi'])
-
-#ocserverbasicops = server_env.Program(
-#    'ocserverbasicops', ['common.cpp', 'ocserverbasicops.cpp'])
-#occlientbasicops = server_env.Program(
-#    'occlientbasicops', ['common.cpp', 'occlientbasicops.cpp'])
-
-# ETRI
+# Build Blood Pressure Monitor
 server = server_env.Program(
     'server', [
         'common.cpp', 

@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------------
+// Title: [IoTivity][Blood Pressure Monitor] Atomic Measurement
+// Description: Defines "oic.r.bloodpressuremonitor-am" and its behaviors
+//-----------------------------------------------------------------------------
+
 #include "iotivity_config.h"
 #include <stdio.h>
 #include <string.h>

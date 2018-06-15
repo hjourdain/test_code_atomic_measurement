@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------------
+// Title: [IoTivity][Blood Pressure Monitor] Linked resources: pulse rate
+// Description: Defines "oic.r.pulserate" and its behaviors
+//-----------------------------------------------------------------------------
+
 #include "iotivity_config.h"
 #include <stdio.h>
 #include <string.h>

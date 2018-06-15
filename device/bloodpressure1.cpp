@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------------
+// Title: [IoTivity][Blood Pressure Monitor] Linked resources: blood pressure
+// Description: Defines "oic.r.blood.pressure" and its behaviors
+//-----------------------------------------------------------------------------
+
 #include "iotivity_config.h"
 #include <stdio.h>
 #include <string.h>

@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------------
+// Title: [IoTivity][Blood Pressure Monitor] Server
+// Description: Defines "oic.d.bloodpressuremonitor" and its information
+//-----------------------------------------------------------------------------
+
 #include "iotivity_config.h"
 #include <stdio.h>
 #include <string.h>

@@ -29,7 +29,7 @@ server_env.PrependUnique(LIBS=['octbstack'])
 server_env.AppendUnique(LIBS=['mbedtls', 'mbedx509', 'mbedcrypto'])
 server_env.AppendUnique(CPPDEFINES=['TB_LOG'])
 
-# Build Blood Pressure Monitor 
+# Build Blood Pressure Monitor
 server = server_env.Program(
     'server', [
         'common.cpp', 

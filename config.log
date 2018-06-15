@@ -1,31 +1,43 @@
 file /home/hongki/iotivity/build_common/SConscript,line 820:
 	Configure(confdir = .sconf_temp)
 scons: Configure: Checking for POSIX Thread Support...
-.sconf_temp/conftest_0.c <-
+scons: Configure: ".sconf_temp/conftest_0.c" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_0.c <-
+  |  |
+  |  |#if !defined(__GNUC__)
+  |  |#  error "Not the GCC C compiler."
+  |  |#endif
+  |  |
+  |  |int foo(void)
+  |  |{
+  |  |    return 0;
+  |  |}
+  |  |
   |
-  |#if !defined(__GNUC__)
-  |#  error "Not the GCC C compiler."
-  |#endif
+scons: Configure: ".sconf_temp/conftest_0.o" is up to date.
+scons: Configure: The original builder output was:
+  |Compiling .sconf_temp/conftest_0.o
   |
-  |int foo(void)
-  |{
-  |    return 0;
-  |}
+scons: Configure: ".sconf_temp/conftest_1.c" is up to date.
+scons: Configure: The original builder output was:
+  |.sconf_temp/conftest_1.c <-
+  |  |
+  |  |#include <unistd.h>
+  |  |#include <pthread.h>
+  |  |int main()
+  |  |{
+  |  |    #ifndef _POSIX_THREADS
+  |  |    # error POSIX Threads support not available
+  |  |    #endif
+  |  |    return 0;
+  |  |}
+  |  |
   |
-Compiling .sconf_temp/conftest_0.o
-.sconf_temp/conftest_1.c <-
+scons: Configure: ".sconf_temp/conftest_1.o" is up to date.
+scons: Configure: The original builder output was:
+  |Compiling .sconf_temp/conftest_1.o
   |
-  |#include <unistd.h>
-  |#include <pthread.h>
-  |int main()
-  |{
-  |    #ifndef _POSIX_THREADS
-  |    # error POSIX Threads support not available
-  |    #endif
-  |    return 0;
-  |}
-  |
-Compiling .sconf_temp/conftest_1.o
-scons: Configure: yes
+scons: Configure: (cached) yes
 
 
