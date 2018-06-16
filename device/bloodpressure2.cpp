@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Title: [IoTivity][Blood Pressure Monitor] Linked resources: pulse rate
+// Title: [IoTivity][Blood Pressure Monitor] Linked Resource Type: Pulse Rate
 // Description: Defines "oic.r.pulserate" and its behaviors
 //-----------------------------------------------------------------------------
 
@@ -56,9 +56,7 @@ OCRepPayload* getBP2Payload(const char* uri);
 /* This method converts the payload to JSON format */
 OCRepPayload* constructBP2Response (OCEntityHandlerRequest *ehRequest);
 
-/* Following methods process the GET
- * requests
- */
+/* Following methods process the GET requests */
 OCEntityHandlerResult ProcessBP2GetRequest (OCEntityHandlerRequest *ehRequest,
                                          OCRepPayload **payload);
 
