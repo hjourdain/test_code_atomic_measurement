@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Title: [IoTivity][Blood Pressure Monitor] Linked resources: blood pressure
+// Title: [IoTivity][Blood Pressure Monitor] Linked Resource Type: Blood Pressure
 // Description: Defines "oic.r.blood.pressure" and its behaviors
 //-----------------------------------------------------------------------------
 
@@ -56,9 +56,7 @@ OCRepPayload* getBP1Payload(const char* uri);
 /* This method converts the payload to JSON format */
 OCRepPayload* constructBP1Response (OCEntityHandlerRequest *ehRequest);
 
-/* Following methods process the GET
- * requests
- */
+/* Following methods process the GET requests */
 OCEntityHandlerResult ProcessBP1GetRequest (OCEntityHandlerRequest *ehRequest,
                                          OCRepPayload **payload);
 
