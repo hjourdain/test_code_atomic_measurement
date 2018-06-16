@@ -107,15 +107,10 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
     size_t dimensions[MAX_REP_ARRAY_DEPTH] = { 0 };
     if(strlen(query) >= 10) {
         if(*query == 'i' && *(query+1) == 'f' && *(query+2) == '=') {
-            if(*(query+3) == 'o' &&
-            *(query+4) == 'i' &&
-            *(query+5) == 'c' &&
-            *(query+6) == '.' &&
-            *(query+7) == 'i' &&
-            *(query+8) == 'f' &&
-            *(query+9) == '.' ) {
-                if(*(query+10) == 'b' &&
-                   strlen(query) == 11) {
+            if(*(query+3) == 'o' && *(query+4) == 'i' && *(query+5) == 'c' && *(query+6) == '.' &&
+            *(query+7) == 'i' && *(query+8) == 'f' && *(query+9) == '.' ) {
+                if(*(query+10) == 'b' && strlen(query) == 11) {
+                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.b
 
                     OCRepPayload* payload = OCRepPayloadCreate(); 
                     if(!payload)
@@ -142,8 +137,8 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
 
                     return payload;
 
-                } else if(*(query+10) == 'l' && 
-                          *(query+11) == 'l' ) {         
+                } else if(*(query+10) == 'l' && *(query+11) == 'l' ) {         
+                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.ll
 
                     OCRepPayload* payload = OCRepPayloadCreate();
                     if(!payload)
@@ -181,15 +176,9 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
 
                     return payload;
 
-                } else if(*(query+10) == 'b' && 
-                          *(query+11) == 'a' &&
-                          *(query+12) == 's' &&
-                          *(query+13) == 'e' &&
-                          *(query+14) == 'l' &&
-                          *(query+15) == 'i' &&
-                          *(query+16) == 'n' &&
-                          *(query+17) == 'e') {
-                    // baseline
+                } else if(*(query+10) == 'b' && *(query+11) == 'a' && *(query+12) == 's' && *(query+13) == 'e' &&
+                          *(query+14) == 'l' && *(query+15) == 'i' && *(query+16) == 'n' && *(query+17) == 'e') {
+                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.baseline
 
                     OCRepPayload* payload = OCRepPayloadCreate();
                     if(!payload)
@@ -253,35 +242,38 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
         } 
         else if (*query == 'r' && *(query+1) == 't' && *(query+2) == '=')
         {
+            // IUT responds to Batch RETRIEVE using an 'rt' query
             *ehResult = OC_EH_FORBIDDEN;
         }
     }
-    // Test code: When there is no query
+    
     else {
-            OCRepPayload* payload = OCRepPayloadCreate(); 
-                    if(!payload)
-                    {
-                        OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
-                        return nullptr;
-                    }
-                    
-                    OCRepPayload* child1Rep = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP); 
-                    OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP); 
-                    OCRepPayloadSetPropString(child1Rep, "units", "mmHg");
-                    OCRepPayloadSetPropObject(payload, "rep", child1Rep);
-                    OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
-                    
-                    OCRepPayload* child2 = OCRepPayloadCreate();
-                    
-                    OCRepPayload* child2Rep = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(child2Rep, "pulserate", pulse_rate);
-                    OCRepPayloadSetPropObject(child2, "rep", child2Rep);
-                    OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
+        // IUT responds to RETRIEVE without an Interface query
+        // Default Interface of an Atomic Measurement Resourt Type is oic.if.b
+        OCRepPayload* payload = OCRepPayloadCreate(); 
+        if(!payload)
+        {
+            OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
+            return nullptr;
+        }
+        
+        OCRepPayload* child1Rep = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP); 
+        OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP); 
+        OCRepPayloadSetPropString(child1Rep, "units", "mmHg");
+        OCRepPayloadSetPropObject(payload, "rep", child1Rep);
+        OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
+        
+        OCRepPayload* child2 = OCRepPayloadCreate();
+        
+        OCRepPayload* child2Rep = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(child2Rep, "pulserate", pulse_rate);
+        OCRepPayloadSetPropObject(child2, "rep", child2Rep);
+        OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
 
-                    OCRepPayloadAppend(payload, child2);
+        OCRepPayloadAppend(payload, child2);
 
-                    return payload;
+        return payload;
     }
 }
 
