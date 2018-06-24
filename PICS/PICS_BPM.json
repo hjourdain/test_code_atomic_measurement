@@ -15,5 +15,6 @@
     "wifiEasySetup": false,
     "RDPublishCapability": false,
     "SSIDEnrollee": "",
-    "PasswordEnrollee": ""
+    "PasswordEnrollee": "",
+    "atomicMeasurements": ["oic.r.blood.pressure", "oic.r.pulserate"]
 }
