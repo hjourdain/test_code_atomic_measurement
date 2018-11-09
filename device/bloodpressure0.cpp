@@ -46,8 +46,8 @@ typedef struct BLOODPRESSURE0RESOURCE{
 
 static BloodPressure0Resource BP0;
 
-char *gBP0ResourceType= "oic.wk.atomicmeasurement";
-char *gBP0ResourceUri= (char *)"/BloodPressureMonitorAMResURI";
+const char *gBP0ResourceType = "oic.wk.atomicmeasurement";
+const char *gBP0ResourceUri = "/BloodPressureMonitorAMResURI";
 
 int diastolicBP = 120;
 int systolicBP = 80;
@@ -66,7 +66,7 @@ OCRepPayload* constructBP0Response (OCEntityHandlerRequest *ehRequest, OCEntityH
 OCEntityHandlerResult ProcessBP0GetRequest (OCEntityHandlerRequest *ehRequest,
                                          OCRepPayload **payload);
 
-int createBP0ResourceEx (char *uri, BloodPressure0Resource *BP0Resource);       
+int createBP0ResourceEx (const char *uri, BloodPressure0Resource *BP0Resource);       
 
 //-----------------------------------------------------------------------------
 // Callback functions
@@ -96,7 +96,7 @@ void generateRandomValue() {
 }
 
 
-OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandlerResult * ehResult)
+OCRepPayload *getBP0Payload(const char *uri, const char *query, OCEntityHandlerResult *ehResult)
 {
     
     OIC_LOG_V(INFO, TAG, "query[%s]", query);
@@ -149,10 +149,10 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
 
                     OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");                    
                     dimensions[0] = 1;
-                    char * chile1rtStr[] = {"oic.r.blood.pressure"};
+                    const char *chile1rtStr[] = {"oic.r.blood.pressure"};
                     OCRepPayloadSetStringArray(payload, "rt", (const char **)chile1rtStr, dimensions);
                     dimensions[0] = 2;
-                    char * child1ifStr[] = {"oic.if.s", "oic.if.baseline"};
+                    const char *child1ifStr[] = {"oic.if.s", "oic.if.baseline"};
                     OCRepPayloadSetStringArray(payload, "if", (const char **)child1ifStr, dimensions);
                     
                     OCRepPayload* bp_p = OCRepPayloadCreate();
@@ -162,10 +162,10 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
                     OCRepPayload* child2 = OCRepPayloadCreate();                    
                     OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");                    
                     dimensions[0] = 1;
-                    char * chile2rtStr[] = {"oic.r.pulserate"};
+                    const char *chile2rtStr[] = {"oic.r.pulserate"};
                     OCRepPayloadSetStringArray(child2, "rt", (const char **)chile2rtStr, dimensions);
                     dimensions[0] = 2;
-                    char * child2ifStr[] = {"oic.if.s", "oic.if.baseline"};
+                    const char *child2ifStr[] = {"oic.if.s", "oic.if.baseline"};
                     OCRepPayloadSetStringArray(child2, "if", (const char **)child2ifStr, dimensions);
 
                     OCRepPayload* pr_p = OCRepPayloadCreate();
@@ -188,28 +188,28 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
                     }
 
                     dimensions[0] = 2;
-                    char * rtStr[] = {"oic.r.bloodpressuremonitor-am", "oic.wk.atomicmeasurement"};
+                    const char *rtStr[] = {"oic.r.bloodpressuremonitor-am", "oic.wk.atomicmeasurement"};
                     OCRepPayloadSetStringArray(payload, "rt", (const char **)rtStr, dimensions);
 
                     dimensions[0] = 3;
-                    char * ifStr[] = {"oic.if.b", "oic.if.ll", "oic.if.baseline"};
+                    const char *ifStr[] = {"oic.if.b", "oic.if.ll", "oic.if.baseline"};
                     OCRepPayloadSetStringArray(payload, "if", (const char **)ifStr, dimensions);
 
                     dimensions[0] = 1;
-                    char * rtsmStr[] = {"oic.r.blood.pressure"};
+                    const char *rtsmStr[] = {"oic.r.blood.pressure"};
                     OCRepPayloadSetStringArray(payload, "rts-m", (const char **)rtsmStr, dimensions);
 
                     dimensions[0] = 2;
-                    char * rtsStr[] = {"oic.r.blood.pressure", "oic.r.pulserate"};
+                    const char *rtsStr[] = {"oic.r.blood.pressure", "oic.r.pulserate"};
                     OCRepPayloadSetStringArray(payload, "rts", (const char **)rtsStr, dimensions);
 
                     OCRepPayload* href1 = OCRepPayloadCreate();
                     OCRepPayloadSetPropString(href1, "href", "/myBloodPressureResURI");
                     dimensions[0] = 1;
-                    char * href1RtStr[] = {"oic.r.blood.pressure"};
+                    const char *href1RtStr[] = {"oic.r.blood.pressure"};
                     OCRepPayloadSetStringArray(href1, "rt", (const char **)href1RtStr, dimensions);
                     dimensions[0] = 2;
-                    char * href1IfStr[] = {"oic.if.s", "oic.if.baseline"};
+                    const char *href1IfStr[] = {"oic.if.s", "oic.if.baseline"};
                     OCRepPayloadSetStringArray(href1, "if", (const char **)href1IfStr, dimensions);
 
                     OCRepPayload* bp_p = OCRepPayloadCreate();
@@ -219,10 +219,10 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
                     OCRepPayload* href2 = OCRepPayloadCreate();
                     OCRepPayloadSetPropString(href2, "href", "/myPulseRateResURI");
                     dimensions[0] = 1;
-                    char * href2RtStr[] = {"oic.r.pulserate"};
+                    const char *href2RtStr[] = {"oic.r.pulserate"};
                     OCRepPayloadSetStringArray(href2, "rt", (const char **)href2RtStr, dimensions);
                     dimensions[0] = 2;
-                    char * href2IfStr[] = {"oic.if.s", "oic.if.baseline"};
+                    const char *href2IfStr[] = {"oic.if.s", "oic.if.baseline"};
                     OCRepPayloadSetStringArray(href2, "if", (const char **)href2IfStr, dimensions);
 
                     OCRepPayload* pr_p = OCRepPayloadCreate();
@@ -237,6 +237,8 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
 
                 } else {
                     *ehResult = OC_EH_FORBIDDEN;
+                    OIC_LOG(ERROR, TAG, PCF("Interface not supported!"));
+                    return nullptr;
                 }
             }
         } 
@@ -244,6 +246,8 @@ OCRepPayload* getBP0Payload(const char* uri, const char * query, OCEntityHandler
         {
             // IUT responds to Batch RETRIEVE using an 'rt' query
             *ehResult = OC_EH_FORBIDDEN;
+            OIC_LOG(ERROR, TAG, PCF("rt query not supported!"));
+            return nullptr;
         }
     }
     
@@ -330,11 +334,11 @@ void *valueGenerateForObserveThread(void *data) {
         }
         nanosleep(&timeout, NULL);
     }
+    return NULL;
 }
 
 void startObserve() {
     char p[] = "valueGenerateForObserveThread";
-    int status;
     pthread_t p_thread;
     threadQuitFlag = 0;
     int thread_id = pthread_create(&p_thread, NULL, valueGenerateForObserveThread, (void*)p);
@@ -461,7 +465,7 @@ int createBP0Resource () {
     return 0;
 }
 
-int createBP0ResourceEx (char *uri, BloodPressure0Resource *BP0Resource)
+int createBP0ResourceEx (const char *uri, BloodPressure0Resource *BP0Resource)
 {
     if (!uri)
     {

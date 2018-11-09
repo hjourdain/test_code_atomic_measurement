@@ -44,8 +44,8 @@ typedef struct BLOODPRESSURE1RESOURCE{
 
 static BloodPressure1Resource BP1;
 
-char *gBP1ResourceType= (char *)"oic.r.blood.pressure";
-char *gBP1ResourceUri= (char *)"/myBloodPressureResURI";
+const char *gBP1ResourceType= "oic.r.blood.pressure";
+const char *gBP1ResourceUri= "/myBloodPressureResURI";
 
 //-----------------------------------------------------------------------------
 // Function prototype
@@ -60,7 +60,7 @@ OCRepPayload* constructBP1Response (OCEntityHandlerRequest *ehRequest);
 OCEntityHandlerResult ProcessBP1GetRequest (OCEntityHandlerRequest *ehRequest,
                                          OCRepPayload **payload);
 
-int createBP1ResourceEx (char *uri, BloodPressure1Resource *BP1Resource);       
+int createBP1ResourceEx (const char *uri, BloodPressure1Resource *BP1Resource);       
 
 //-----------------------------------------------------------------------------
 // Callback functions
@@ -85,7 +85,7 @@ OCRepPayload* getBP1Payload(const char* uri)
     size_t dimensions[MAX_REP_ARRAY_DEPTH] = { 0 };
 
     dimensions[0] = 1;
-    char * rtStr[] = {"oic.r.blood.pressure"};
+    const char *rtStr[] = {"oic.r.blood.pressure"};
     OCRepPayloadSetStringArray(payload, "rt", (const char **)rtStr, dimensions);
     OCRepPayloadSetPropString(payload, "id", "user_example_id");
     OCRepPayloadSetPropInt(payload, "systolic", 0);
@@ -163,7 +163,7 @@ int createBP1Resource () {
     return 0;
 }
 
-int createBP1ResourceEx (char *uri, BloodPressure1Resource *BP1Resource)
+int createBP1ResourceEx (const char *uri, BloodPressure1Resource *BP1Resource)
 {
     if (!uri)
     {
