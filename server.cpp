@@ -25,6 +25,7 @@
 
 int gQuitFlag = 0;
 static char CRED_FILE[] = "server.dat";
+static char INTROSPECTION_FILE[] = "server.idd.dat";
 
 /* SIGINT handler: set gQuitFlag to 1 for graceful termination */
 void handleSigInt(int signum)
@@ -40,6 +41,10 @@ FILE* server_fopen(const char *path, const char *mode)
     if (0 == strcmp(path, OC_SECURITY_DB_DAT_FILE_NAME))
     {
         return fopen(CRED_FILE, mode);
+    }
+    else if (0 == strcmp(path, OC_INTROSPECTION_FILE_NAME))
+    { 
+        return fopen(INTROSPECTION_FILE, mode);
     }
     else
     {
