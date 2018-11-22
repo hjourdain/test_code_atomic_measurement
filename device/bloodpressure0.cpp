@@ -105,178 +105,164 @@ OCRepPayload *getBP0Payload(const char *uri, const char *query, OCEntityHandlerR
     generateRandomValue();
 
     size_t dimensions[MAX_REP_ARRAY_DEPTH] = { 0 };
-    if(strlen(query) >= 10) {
-        if(*query == 'i' && *(query+1) == 'f' && *(query+2) == '=') {
-            if(*(query+3) == 'o' && *(query+4) == 'i' && *(query+5) == 'c' && *(query+6) == '.' &&
-            *(query+7) == 'i' && *(query+8) == 'f' && *(query+9) == '.' ) {
-                if(*(query+10) == 'b' && strlen(query) == 11) {
-                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.b
+    if (strcmp(query, "if=oic.if.baseline") == 0) {
+        // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.baseline
 
-                    OCRepPayload* payload = OCRepPayloadCreate(); 
-                    if(!payload)
-                    {
-                        OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
-                        return nullptr;
-                    }
-                    
-                    OCRepPayload* child1Rep = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP); 
-                    OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP); 
-                    OCRepPayloadSetPropString(child1Rep, "units", "mmHg");
-                    OCRepPayloadSetPropObject(payload, "rep", child1Rep);
-                    OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
-                    
-                    OCRepPayload* child2 = OCRepPayloadCreate();
-                    
-                    OCRepPayload* child2Rep = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(child2Rep, "pulserate", pulse_rate); 
-                    OCRepPayloadSetPropObject(child2, "rep", child2Rep);
-                    OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
-
-                    OCRepPayloadAppend(payload, child2);
-
-                    return payload;
-
-                } else if(*(query+10) == 'l' && *(query+11) == 'l' ) {         
-                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.ll
-
-                    OCRepPayload* payload = OCRepPayloadCreate();
-                    if(!payload)
-                    {
-                        OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
-                        return nullptr;
-                    }
-
-                    OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");                    
-                    dimensions[0] = 1;
-                    const char *chile1rtStr[] = {"oic.r.blood.pressure"};
-                    OCRepPayloadSetStringArray(payload, "rt", (const char **)chile1rtStr, dimensions);
-                    dimensions[0] = 2;
-                    const char *child1ifStr[] = {"oic.if.s", "oic.if.baseline"};
-                    OCRepPayloadSetStringArray(payload, "if", (const char **)child1ifStr, dimensions);
-                    
-                    OCRepPayload* bp_p = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(bp_p, "bm", 2);
-                    OCRepPayloadSetPropObject(payload, "p", bp_p);
-                    
-                    OCRepPayload* child2 = OCRepPayloadCreate();                    
-                    OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");                    
-                    dimensions[0] = 1;
-                    const char *chile2rtStr[] = {"oic.r.pulserate"};
-                    OCRepPayloadSetStringArray(child2, "rt", (const char **)chile2rtStr, dimensions);
-                    dimensions[0] = 2;
-                    const char *child2ifStr[] = {"oic.if.s", "oic.if.baseline"};
-                    OCRepPayloadSetStringArray(child2, "if", (const char **)child2ifStr, dimensions);
-
-                    OCRepPayload* pr_p = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(pr_p, "bm", 2);
-                    OCRepPayloadSetPropObject(child2, "p", pr_p);
-
-                    OCRepPayloadAppend(payload, child2);
-
-                    return payload;
-
-                } else if(*(query+10) == 'b' && *(query+11) == 'a' && *(query+12) == 's' && *(query+13) == 'e' &&
-                          *(query+14) == 'l' && *(query+15) == 'i' && *(query+16) == 'n' && *(query+17) == 'e') {
-                    // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.baseline
-
-                    OCRepPayload* payload = OCRepPayloadCreate();
-                    if(!payload)
-                    {
-                        OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
-                        return nullptr;
-                    }
-
-                    dimensions[0] = 2;
-                    const char *rtStr[] = {"oic.r.bloodpressuremonitor-am", "oic.wk.atomicmeasurement"};
-                    OCRepPayloadSetStringArray(payload, "rt", (const char **)rtStr, dimensions);
-
-                    dimensions[0] = 3;
-                    const char *ifStr[] = {"oic.if.b", "oic.if.ll", "oic.if.baseline"};
-                    OCRepPayloadSetStringArray(payload, "if", (const char **)ifStr, dimensions);
-
-                    dimensions[0] = 1;
-                    const char *rtsmStr[] = {"oic.r.blood.pressure"};
-                    OCRepPayloadSetStringArray(payload, "rts-m", (const char **)rtsmStr, dimensions);
-
-                    dimensions[0] = 2;
-                    const char *rtsStr[] = {"oic.r.blood.pressure", "oic.r.pulserate"};
-                    OCRepPayloadSetStringArray(payload, "rts", (const char **)rtsStr, dimensions);
-
-                    OCRepPayload* href1 = OCRepPayloadCreate();
-                    OCRepPayloadSetPropString(href1, "href", "/myBloodPressureResURI");
-                    dimensions[0] = 1;
-                    const char *href1RtStr[] = {"oic.r.blood.pressure"};
-                    OCRepPayloadSetStringArray(href1, "rt", (const char **)href1RtStr, dimensions);
-                    dimensions[0] = 2;
-                    const char *href1IfStr[] = {"oic.if.s", "oic.if.baseline"};
-                    OCRepPayloadSetStringArray(href1, "if", (const char **)href1IfStr, dimensions);
-
-                    OCRepPayload* bp_p = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(bp_p, "bm", 2);
-                    OCRepPayloadSetPropObject(href1, "p", bp_p);
-
-                    OCRepPayload* href2 = OCRepPayloadCreate();
-                    OCRepPayloadSetPropString(href2, "href", "/myPulseRateResURI");
-                    dimensions[0] = 1;
-                    const char *href2RtStr[] = {"oic.r.pulserate"};
-                    OCRepPayloadSetStringArray(href2, "rt", (const char **)href2RtStr, dimensions);
-                    dimensions[0] = 2;
-                    const char *href2IfStr[] = {"oic.if.s", "oic.if.baseline"};
-                    OCRepPayloadSetStringArray(href2, "if", (const char **)href2IfStr, dimensions);
-
-                    OCRepPayload* pr_p = OCRepPayloadCreate();
-                    OCRepPayloadSetPropInt(pr_p, "bm", 2);
-                    OCRepPayloadSetPropObject(href2, "p", pr_p);
-
-                    OCRepPayload * hrefs[] = { href1, href2};
-                    dimensions[0] = 2;
-                    OCRepPayloadSetPropObjectArray(payload, "links", (const OCRepPayload **)hrefs, dimensions);
-
-                    return payload;
-
-                } else {
-                    *ehResult = OC_EH_FORBIDDEN;
-                    OIC_LOG(ERROR, TAG, PCF("Interface not supported!"));
-                    return nullptr;
-                }
-            }
-        } 
-        else if (*query == 'r' && *(query+1) == 't' && *(query+2) == '=')
-        {
-            // IUT responds to Batch RETRIEVE using an 'rt' query
-            *ehResult = OC_EH_FORBIDDEN;
-            OIC_LOG(ERROR, TAG, PCF("rt query not supported!"));
-            return nullptr;
-        }
-    }
-    
-    else {
-        // IUT responds to RETRIEVE without an Interface query
-        // Default Interface of an Atomic Measurement Resourt Type is oic.if.b
-        OCRepPayload* payload = OCRepPayloadCreate(); 
+        OCRepPayload* payload = OCRepPayloadCreate();
         if(!payload)
         {
             OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
             return nullptr;
         }
-        
+
+        dimensions[0] = 2;
+        const char *rtStr[] = {"oic.r.bloodpressuremonitor-am", "oic.wk.atomicmeasurement"};
+        OCRepPayloadSetStringArray(payload, "rt", (const char **)rtStr, dimensions);
+
+        dimensions[0] = 3;
+        const char *ifStr[] = {"oic.if.b", "oic.if.ll", "oic.if.baseline"};
+        OCRepPayloadSetStringArray(payload, "if", (const char **)ifStr, dimensions);
+
+        dimensions[0] = 1;
+        const char *rtsmStr[] = {"oic.r.blood.pressure"};
+        OCRepPayloadSetStringArray(payload, "rts-m", (const char **)rtsmStr, dimensions);
+
+        dimensions[0] = 2;
+        const char *rtsStr[] = {"oic.r.blood.pressure", "oic.r.pulserate"};
+        OCRepPayloadSetStringArray(payload, "rts", (const char **)rtsStr, dimensions);
+
+        OCRepPayloadSetPropString(payload, "id", "user_example_id");
+
+        OCRepPayload* href1 = OCRepPayloadCreate();
+        OCRepPayloadSetPropString(href1, "href", "/myBloodPressureResURI");
+        dimensions[0] = 1;
+        const char *href1RtStr[] = {"oic.r.blood.pressure"};
+        OCRepPayloadSetStringArray(href1, "rt", (const char **)href1RtStr, dimensions);
+        dimensions[0] = 2;
+        const char *href1IfStr[] = {"oic.if.s", "oic.if.baseline"};
+        OCRepPayloadSetStringArray(href1, "if", (const char **)href1IfStr, dimensions);
+
+        OCRepPayload* bp_p = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(bp_p, "bm", 2);
+        OCRepPayloadSetPropObject(href1, "p", bp_p);
+
+        OCRepPayload* href2 = OCRepPayloadCreate();
+        OCRepPayloadSetPropString(href2, "href", "/myPulseRateResURI");
+        dimensions[0] = 1;
+        const char *href2RtStr[] = {"oic.r.pulserate"};
+        OCRepPayloadSetStringArray(href2, "rt", (const char **)href2RtStr, dimensions);
+        dimensions[0] = 2;
+        const char *href2IfStr[] = {"oic.if.s", "oic.if.baseline"};
+        OCRepPayloadSetStringArray(href2, "if", (const char **)href2IfStr, dimensions);
+
+        OCRepPayload* pr_p = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(pr_p, "bm", 2);
+        OCRepPayloadSetPropObject(href2, "p", pr_p);
+
+        OCRepPayload * hrefs[] = { href1, href2};
+        dimensions[0] = 2;
+        OCRepPayloadSetPropObjectArray(payload, "links", (const OCRepPayload **)hrefs, dimensions);
+        return payload;
+    }
+    else if (strcmp(query, "if=oic.if.b") == 0) {
+        // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.b
+        OCRepPayload* payload = OCRepPayloadCreate();
+        if(!payload)
+        {
+            OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
+            return nullptr;
+        }
+
         OCRepPayload* child1Rep = OCRepPayloadCreate();
-        OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP); 
-        OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP); 
+        OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP);
+        OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP);
         OCRepPayloadSetPropString(child1Rep, "units", "mmHg");
         OCRepPayloadSetPropObject(payload, "rep", child1Rep);
         OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
-        
+
         OCRepPayload* child2 = OCRepPayloadCreate();
-        
+
         OCRepPayload* child2Rep = OCRepPayloadCreate();
         OCRepPayloadSetPropInt(child2Rep, "pulserate", pulse_rate);
         OCRepPayloadSetPropObject(child2, "rep", child2Rep);
         OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
 
         OCRepPayloadAppend(payload, child2);
+        return payload;
+    }
+    else if (strcmp(query, "if=oic.if.ll") == 0) {
+        // IUT responds to /BloodPressureMonitorAMResURI?if=oic.if.ll
+        OCRepPayload* payload = OCRepPayloadCreate();
+        if(!payload)
+        {
+            OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
+            return nullptr;
+        }
 
+        OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
+        dimensions[0] = 1;
+        const char *chile1rtStr[] = {"oic.r.blood.pressure"};
+        OCRepPayloadSetStringArray(payload, "rt", (const char **)chile1rtStr, dimensions);
+        dimensions[0] = 2;
+        const char *child1ifStr[] = {"oic.if.s", "oic.if.baseline"};
+        OCRepPayloadSetStringArray(payload, "if", (const char **)child1ifStr, dimensions);
+
+        OCRepPayload* bp_p = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(bp_p, "bm", 2);
+        OCRepPayloadSetPropObject(payload, "p", bp_p);
+
+        OCRepPayload* child2 = OCRepPayloadCreate();
+        OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
+        dimensions[0] = 1;
+        const char *chile2rtStr[] = {"oic.r.pulserate"};
+        OCRepPayloadSetStringArray(child2, "rt", (const char **)chile2rtStr, dimensions);
+        dimensions[0] = 2;
+        const char *child2ifStr[] = {"oic.if.s", "oic.if.baseline"};
+        OCRepPayloadSetStringArray(child2, "if", (const char **)child2ifStr, dimensions);
+
+        OCRepPayload* pr_p = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(pr_p, "bm", 2);
+        OCRepPayloadSetPropObject(child2, "p", pr_p);
+
+        OCRepPayloadAppend(payload, child2);
+        return payload;
+    }
+    else if (strncmp(query, "if=", 3) == 0) {
+        *ehResult = OC_EH_FORBIDDEN;
+        OIC_LOG(ERROR, TAG, PCF("Interface not supported!"));
+        return nullptr;
+    }
+    else if (strncmp(query, "rt=", 3) == 0) {
+        // IUT responds to Batch RETRIEVE using an 'rt' query
+        *ehResult = OC_EH_FORBIDDEN;
+        OIC_LOG(ERROR, TAG, PCF("rt query not supported!"));
+        return nullptr;
+    }
+    else {
+        // IUT responds to RETRIEVE without an Interface query
+        // Default Interface of an Atomic Measurement Resourt Type is oic.if.b
+        OCRepPayload* payload = OCRepPayloadCreate();
+        if(!payload)
+        {
+            OIC_LOG(ERROR, TAG, PCF("Failed to allocate Payload"));
+            return nullptr;
+        }
+
+        OCRepPayload* child1Rep = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(child1Rep, "systolic", systolicBP);
+        OCRepPayloadSetPropInt(child1Rep, "diastolic", diastolicBP);
+        OCRepPayloadSetPropString(child1Rep, "units", "mmHg");
+        OCRepPayloadSetPropObject(payload, "rep", child1Rep);
+        OCRepPayloadSetPropString(payload, "href", "/myBloodPressureResURI");
+
+        OCRepPayload* child2 = OCRepPayloadCreate();
+
+        OCRepPayload* child2Rep = OCRepPayloadCreate();
+        OCRepPayloadSetPropInt(child2Rep, "pulserate", pulse_rate);
+        OCRepPayloadSetPropObject(child2, "rep", child2Rep);
+        OCRepPayloadSetPropString(child2, "href", "/myPulseRateResURI");
+
+        OCRepPayloadAppend(payload, child2);
         return payload;
     }
 }
