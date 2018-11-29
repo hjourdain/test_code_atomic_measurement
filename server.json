@@ -64,17 +64,5 @@
         "rowneruuid": "00000000-0000-0000-0000-000000000000",
         "rt": ["oic.r.doxm"],
         "if": ["oic.if.baseline"]
-    },
-    "cred": {
-        "creds": [
-            {
-                "credid": 1,
-                "subjectuuid": "11111111-2222-3333-4444-555555555555",
-                "credtype": 1
-            }
-       ],
-        "rowneruuid": "00000000-0000-0000-0000-000000000000",
-        "rt": ["oic.r.cred"],
-        "if": ["oic.if.baseline"]
     }
 }
